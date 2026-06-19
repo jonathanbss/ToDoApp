@@ -58,9 +58,8 @@ public class ToDoAppLogik {
     private void loescheToDo() {
         System.out.println("-----------------------------");
         System.out.println("Bitte geben Sie die Nummer des zu löschenden To-Dos ein:");
-        String eingabe = scanner.nextLine();
 
-        int eingegebeneZahl = Integer.parseInt(eingabe);
+        int eingegebeneZahl = this.leseZahl();
         eingegebeneZahl = eingegebeneZahl - 1;
         if(eingegebeneZahl >= 0 && eingegebeneZahl <= toDoListe.size()-1) {
             TodoElement aktuellesTodo = toDoListe.get(eingegebeneZahl);
@@ -88,8 +87,7 @@ public class ToDoAppLogik {
     private void erledigeToDo() {
         System.out.println("-----------------------------");
         System.out.println("Bitte geben Sie die Nummer des To-Dos ein, das als erledigt markiert werden soll:");
-        String eingabe = scanner.nextLine();
-        int eingegebeneZahl = Integer.parseInt(eingabe);
+        int eingegebeneZahl = this.leseZahl();
 
         eingegebeneZahl = eingegebeneZahl - 1;
         if(eingegebeneZahl >= 0 && eingegebeneZahl <= toDoListe.size()-1) {
@@ -119,5 +117,21 @@ public class ToDoAppLogik {
                 System.out.println("Es wurde eine ungültige Option gewählt!");
             }
         }
+    }
+
+    private int leseZahl() {
+        int eingabe = 0;
+        boolean eingabeGueltig = false;
+
+        do {
+            try {
+                eingabe = Integer.parseInt(scanner.nextLine());
+                eingabeGueltig = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Die Eingabe ist keine Zahl.");
+                eingabeGueltig = false;
+            }
+        } while (!eingabeGueltig);
+        return eingabe;
     }
 }
