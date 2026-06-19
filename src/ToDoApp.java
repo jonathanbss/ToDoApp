@@ -10,9 +10,9 @@ public class ToDoApp {
         while(sollLaufen) {
             String eingeleseneDaten = ToDoApp.gebeMenueAusUndLeseEingabe();
             if(eingeleseneDaten.equals("1")) {
-                System.out.println("Es wurde 1 eingegeben");
+                ToDoApp.gebeTodosAus(toDoListe);
             } else if(eingeleseneDaten.equals("2")) {
-                System.out.println("Es wurde 2 eingegeben");
+                toDoListe.add(ToDoApp.erstelleToDo());
             } else if(eingeleseneDaten.equals("3")) {
                 System.out.println("Es wurde 3 eingegeben");
             } else if(eingeleseneDaten.equals("4")) {
@@ -35,6 +35,30 @@ public class ToDoApp {
         System.out.println("-----------------------------");
         System.out.println("Bitte wählen Sie eine Option:");
 
+        Scanner scanner = new Scanner(System.in);
+        String eingabe = scanner.nextLine();
+
+        return eingabe;
+    }
+
+    public static void gebeTodosAus(ArrayList<String> todos) {
+        System.out.println("-----------------------------");
+        int anzahlTodos = todos.size();
+        if(anzahlTodos > 0) {
+            System.out.println("To-Dos:");
+            for(int zaehler = 0; zaehler < anzahlTodos; zaehler++) {
+                String aktuellesTodo = todos.get(zaehler);
+                System.out.println(String.format("%d. %s", zaehler + 1, aktuellesTodo));
+            }
+        } else {
+            System.out.println("Es sind keine To-Dos vorhanden.");
+        }
+        System.out.println("-----------------------------");
+    }
+
+    public static String erstelleToDo() {
+        System.out.println("-----------------------------");
+        System.out.println("Bitte geben Sie ein To-Do ein:");
         Scanner scanner = new Scanner(System.in);
         String eingabe = scanner.nextLine();
 
