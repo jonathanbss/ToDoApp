@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class ToDoApp {
 
     public static void main(String[] args) {
-        ArrayList<String> toDoListe = new ArrayList<>();
+        ArrayList<TodoElement> toDoListe = new ArrayList<>();
         boolean sollLaufen = true;
 
         while(sollLaufen) {
@@ -41,14 +41,20 @@ public class ToDoApp {
         return eingabe;
     }
 
-    public static void gebeTodosAus(ArrayList<String> todos) {
+    public static void gebeTodosAus(ArrayList<TodoElement> todos) {
         System.out.println("-----------------------------");
         int anzahlTodos = todos.size();
         if(anzahlTodos > 0) {
             System.out.println("To-Dos:");
             for(int zaehler = 0; zaehler < anzahlTodos; zaehler++) {
-                String aktuellesTodo = todos.get(zaehler);
-                System.out.println(String.format("%d. %s", zaehler + 1, aktuellesTodo));
+                TodoElement aktuellesTodo = todos.get(zaehler);
+                String status = "";
+                if(aktuellesTodo.erledigt) {
+                    status = "Erledigt";
+                } else {
+                    status = "Offen";
+                }
+                System.out.println(String.format("%d. %s - %s", zaehler + 1, aktuellesTodo.name, status));
             }
         } else {
             System.out.println("Es sind keine To-Dos vorhanden.");
@@ -56,12 +62,14 @@ public class ToDoApp {
         System.out.println("-----------------------------");
     }
 
-    public static String erstelleToDo() {
+    public static TodoElement erstelleToDo() {
+        TodoElement todo = new TodoElement();
         System.out.println("-----------------------------");
         System.out.println("Bitte geben Sie ein To-Do ein:");
         Scanner scanner = new Scanner(System.in);
         String eingabe = scanner.nextLine();
-
-        return eingabe;
+        todo.name = eingabe;
+        todo.erledigt = false;
+        return todo;
     }
 }
