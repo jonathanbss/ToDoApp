@@ -51,4 +51,13 @@ public class ArbeitsspeicherTodoSpeicher implements TodoSpeicher {
     public ArrayList<TodoElement> holeAlleToDos() {
         return todoElements;
     }
+
+    @Override
+    public void aktualisiereToDo(int index, TodoElement todoElement) {
+        if(istWertGueltig(index)) {
+            todoElements.set(index, todoElement);
+        } else {
+            System.out.println("Der angegebene Wert ist außerhalb des gültigen Wertebereichs.");
+        }
+    }
 }

@@ -10,4 +10,5 @@ public interface TodoSpeicher {
     void loescheToDo(int index);
     TodoElement holeToDo(int index);
     ArrayList<TodoElement> holeAlleToDos();
+    void aktualisiereToDo(int index, TodoElement todoElement);
 }

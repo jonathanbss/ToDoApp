@@ -100,6 +100,7 @@ public class ToDoAppLogik {
         if(todoSpeicher.istWertGueltig(eingegebeneZahl)) {
             TodoElement gefundenesTodo = todoSpeicher.holeToDo(eingegebeneZahl);
             gefundenesTodo.alsErledigtMarkieren();
+            todoSpeicher.aktualisiereToDo(eingegebeneZahl, gefundenesTodo);
         } else {
             System.out.println("Es gibt kein To-Do mit dieser Nummer.");
         }

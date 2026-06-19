@@ -99,4 +99,22 @@ public class DateiTodoSpeicher implements TodoSpeicher {
             System.out.println("Der angegebene Wert ist außerhalb des gültigen Wertebereichs.");
         }
     }
+
+    @Override
+    public void aktualisiereToDo(int index, TodoElement todoElement) {
+        if(istWertGueltig(index)) {
+            ArrayList<TodoElement> todos = holeAlleToDos();
+            todos.set(index, todoElement);
+            try {
+                Files.writeString(todoDatei, "", StandardOpenOption.TRUNCATE_EXISTING);
+                for (TodoElement todo : todos) {
+                    speichereToDo(todo);
+                }
+            } catch (IOException e) {
+                System.out.println("Das To-Do konnte nicht aktualisiert werden.");
+            }
+        } else {
+            System.out.println("Der angegebene Wert ist außerhalb des gültigen Wertebereichs.");
+        }
+    }
 }
