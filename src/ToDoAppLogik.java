@@ -1,14 +1,18 @@
+import daten.TodoElement;
+import speicher.ArbeitsspeicherTodoSpeicher;
+import speicher.TodoSpeicher;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ToDoAppLogik {
 
-    private ArrayList<TodoElement> toDoListe;
     private Scanner scanner;
+    private TodoSpeicher todoSpeicher;
 
     public ToDoAppLogik() {
-        toDoListe = new ArrayList<TodoElement>();
         scanner = new Scanner(System.in);
+        todoSpeicher = new ArbeitsspeicherTodoSpeicher();
     }
 
     private String gebeMenueAusUndLeseEingabe() {
@@ -28,11 +32,12 @@ public class ToDoAppLogik {
 
     private void gebeTodosAus() {
         System.out.println("-----------------------------");
-        int anzahlTodos = toDoListe.size();
+        ArrayList<TodoElement> lokaleTodos = todoSpeicher.holeAlleToDos();
+        int anzahlTodos = lokaleTodos.size();
         if(anzahlTodos > 0) {
             System.out.println("To-Dos:");
             for(int zaehler = 0; zaehler < anzahlTodos; zaehler++) {
-                TodoElement aktuellesTodo = toDoListe.get(zaehler);
+                TodoElement aktuellesTodo = lokaleTodos.get(zaehler);
                 String status = "";
                 if(aktuellesTodo.getErledigt()) {
                     status = "Erledigt";
@@ -58,17 +63,18 @@ public class ToDoAppLogik {
     private void loescheToDo() {
         System.out.println("-----------------------------");
         System.out.println("Bitte geben Sie die Nummer des zu löschenden To-Dos ein:");
-
         int eingegebeneZahl = this.leseZahl();
+
         eingegebeneZahl = eingegebeneZahl - 1;
-        if(eingegebeneZahl >= 0 && eingegebeneZahl <= toDoListe.size()-1) {
-            TodoElement aktuellesTodo = toDoListe.get(eingegebeneZahl);
+        if(todoSpeicher.istWertGueltig(eingegebeneZahl)) {
+            TodoElement aktuellesTodo = todoSpeicher.holeToDo(eingegebeneZahl);
             System.out.println(String.format("Möchten Sie das To-Do mit dem Namen '%s' wirklich löschen? J/N", aktuellesTodo.getName()));
             String antwort = scanner.nextLine().trim();
+
             switch(antwort) {
                 case "j":
                 case "J":
-                    toDoListe.remove(eingegebeneZahl);
+                    todoSpeicher.loescheToDo(eingegebeneZahl);
                     System.out.println("Das To-Do wurde gelöscht.");
                     break;
                 case "n":
@@ -90,8 +96,8 @@ public class ToDoAppLogik {
         int eingegebeneZahl = this.leseZahl();
 
         eingegebeneZahl = eingegebeneZahl - 1;
-        if(eingegebeneZahl >= 0 && eingegebeneZahl <= toDoListe.size()-1) {
-            TodoElement gefundenesTodo = toDoListe.get(eingegebeneZahl);
+        if(todoSpeicher.istWertGueltig(eingegebeneZahl)) {
+            TodoElement gefundenesTodo = todoSpeicher.holeToDo(eingegebeneZahl);
             gefundenesTodo.alsErledigtMarkieren();
         } else {
             System.out.println("Es gibt kein To-Do mit dieser Nummer.");
@@ -106,7 +112,7 @@ public class ToDoAppLogik {
             if(eingeleseneDaten.equals("1")) {
                 this.gebeTodosAus();
             } else if(eingeleseneDaten.equals("2")) {
-                toDoListe.add(this.erstelleToDo());
+                todoSpeicher.speichereToDo(this.erstelleToDo());
             } else if(eingeleseneDaten.equals("3")) {
                 this.loescheToDo();
             } else if(eingeleseneDaten.equals("4")) {
