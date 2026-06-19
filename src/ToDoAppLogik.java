@@ -64,7 +64,7 @@ public class ToDoAppLogik {
         if(eingegebeneZahl >= 0 && eingegebeneZahl <= toDoListe.size()-1) {
             TodoElement aktuellesTodo = toDoListe.get(eingegebeneZahl);
             System.out.println(String.format("Möchten Sie das To-Do mit dem Namen '%s' wirklich löschen? J/N", aktuellesTodo.getName()));
-            String antwort = scanner.nextLine();
+            String antwort = scanner.nextLine().trim();
             switch(antwort) {
                 case "j":
                 case "J":
@@ -125,7 +125,7 @@ public class ToDoAppLogik {
 
         do {
             try {
-                eingabe = Integer.parseInt(scanner.nextLine());
+                eingabe = Integer.parseInt(scanner.nextLine().trim());
                 eingabeGueltig = true;
             } catch (NumberFormatException e) {
                 System.out.println("Die Eingabe ist keine Zahl.");
