@@ -6,17 +6,18 @@ public class ToDoApp {
     public static void main(String[] args) {
         ArrayList<TodoElement> toDoListe = new ArrayList<>();
         boolean sollLaufen = true;
+        Scanner scanner = new Scanner(System.in);
 
         while(sollLaufen) {
-            String eingeleseneDaten = ToDoApp.gebeMenueAusUndLeseEingabe();
+            String eingeleseneDaten = ToDoApp.gebeMenueAusUndLeseEingabe(scanner);
             if(eingeleseneDaten.equals("1")) {
                 ToDoApp.gebeTodosAus(toDoListe);
             } else if(eingeleseneDaten.equals("2")) {
-                toDoListe.add(ToDoApp.erstelleToDo());
+                toDoListe.add(ToDoApp.erstelleToDo(scanner));
             } else if(eingeleseneDaten.equals("3")) {
-                System.out.println("Es wurde 3 eingegeben");
+                ToDoApp.loescheToDo(toDoListe, scanner);
             } else if(eingeleseneDaten.equals("4")) {
-                System.out.println("Es wurde 4 eingegeben");
+                ToDoApp.erledigeToDo(toDoListe, scanner);
             } else if(eingeleseneDaten.equals("5")) {
                 sollLaufen = false;
             } else {
@@ -25,7 +26,7 @@ public class ToDoApp {
         }
     }
 
-    public static String gebeMenueAusUndLeseEingabe() {
+    public static String gebeMenueAusUndLeseEingabe(Scanner scanner) {
         System.out.println("----------To-Do-App----------");
         System.out.println("1. Alle To-Dos anzeigen");
         System.out.println("2. To-Do hinzufügen");
@@ -35,7 +36,6 @@ public class ToDoApp {
         System.out.println("-----------------------------");
         System.out.println("Bitte wählen Sie eine Option:");
 
-        Scanner scanner = new Scanner(System.in);
         String eingabe = scanner.nextLine();
 
         return eingabe;
@@ -62,12 +62,56 @@ public class ToDoApp {
         System.out.println("-----------------------------");
     }
 
-    public static TodoElement erstelleToDo() {
+    public static TodoElement erstelleToDo(Scanner scanner) {
         System.out.println("-----------------------------");
         System.out.println("Bitte geben Sie ein To-Do ein:");
-        Scanner scanner = new Scanner(System.in);
         String eingabe = scanner.nextLine();
         TodoElement todo = new TodoElement(eingabe);
         return todo;
+    }
+
+    public static void loescheToDo(ArrayList<TodoElement> todos, Scanner scanner) {
+        System.out.println("-----------------------------");
+        System.out.println("Bitte geben Sie die Nummer des zu löschenden To-Dos ein:");
+        String eingabe = scanner.nextLine();
+
+        int eingegebeneZahl = Integer.parseInt(eingabe);
+        eingegebeneZahl = eingegebeneZahl - 1;
+        if(eingegebeneZahl >= 0 && eingegebeneZahl <= todos.size()-1) {
+            TodoElement aktuellesTodo = todos.get(eingegebeneZahl);
+            System.out.println(String.format("Möchten Sie das To-Do mit dem Namen '%s' wirklich löschen? J/N", aktuellesTodo.getName()));
+            String antwort = scanner.nextLine();
+            switch(antwort) {
+                case "j":
+                case "J":
+                    todos.remove(eingegebeneZahl);
+                    System.out.println("Das To-Do wurde gelöscht.");
+                    break;
+                case "n":
+                case "N":
+                    System.out.println("Der Löschvorgang wurde abgebrochen.");
+                    break;
+                default:
+                    System.out.println("Ihre Antwort war ungültig.");
+                    break;
+            }
+        } else {
+            System.out.println("Es gibt kein To-Do mit dieser Nummer.");
+        }
+    }
+
+    public static void erledigeToDo(ArrayList<TodoElement> todos, Scanner scanner) {
+        System.out.println("-----------------------------");
+        System.out.println("Bitte geben Sie die Nummer des To-Dos ein, das als erledigt markiert werden soll:");
+        String eingabe = scanner.nextLine();
+        int eingegebeneZahl = Integer.parseInt(eingabe);
+
+        eingegebeneZahl = eingegebeneZahl - 1;
+        if(eingegebeneZahl >= 0 && eingegebeneZahl <= todos.size()-1) {
+            TodoElement gefundenesTodo = todos.get(eingegebeneZahl);
+            gefundenesTodo.alsErledigtMarkieren();
+        } else {
+            System.out.println("Es gibt kein To-Do mit dieser Nummer.");
+        }
     }
 }
