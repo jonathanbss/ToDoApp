@@ -49,12 +49,12 @@ public class ToDoApp {
             for(int zaehler = 0; zaehler < anzahlTodos; zaehler++) {
                 TodoElement aktuellesTodo = todos.get(zaehler);
                 String status = "";
-                if(aktuellesTodo.erledigt) {
+                if(aktuellesTodo.getErledigt()) {
                     status = "Erledigt";
                 } else {
                     status = "Offen";
                 }
-                System.out.println(String.format("%d. %s - %s", zaehler + 1, aktuellesTodo.name, status));
+                System.out.println(String.format("%d. %s - %s", zaehler + 1, aktuellesTodo.getName(), status));
             }
         } else {
             System.out.println("Es sind keine To-Dos vorhanden.");
@@ -63,13 +63,11 @@ public class ToDoApp {
     }
 
     public static TodoElement erstelleToDo() {
-        TodoElement todo = new TodoElement();
         System.out.println("-----------------------------");
         System.out.println("Bitte geben Sie ein To-Do ein:");
         Scanner scanner = new Scanner(System.in);
         String eingabe = scanner.nextLine();
-        todo.name = eingabe;
-        todo.erledigt = false;
+        TodoElement todo = new TodoElement(eingabe);
         return todo;
     }
 }
