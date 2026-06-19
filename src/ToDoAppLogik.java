@@ -1,5 +1,6 @@
 import daten.TodoElement;
 import speicher.ArbeitsspeicherTodoSpeicher;
+import speicher.DateiTodoSpeicher;
 import speicher.TodoSpeicher;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class ToDoAppLogik {
 
     public ToDoAppLogik() {
         scanner = new Scanner(System.in);
-        todoSpeicher = new ArbeitsspeicherTodoSpeicher();
+        todoSpeicher = new DateiTodoSpeicher();
     }
 
     private String gebeMenueAusUndLeseEingabe() {
