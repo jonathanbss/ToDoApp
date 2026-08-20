@@ -1,5 +1,13 @@
 # To-Do-App Repository
-Dieses Repository enthält den Code für die To-Do-App, begleitend zum Buch.
+Dieses Repository enthält den Code für die To-Do-App, begleitend zum Buch "Java - Programmieren lernen".
+
+Im epubli-Shop:
+- [E-Book](https://www.epubli.com/shop/java-programmieren-lernen-9783565627424)
+- [Softcover](https://www.epubli.com/shop/java-programmieren-lernen-9783565637362)
+
+Auf Amazon:
+- [E-Book](https://amzn.eu/d/01wPgtV1)
+- [Softcover](https://amzn.eu/d/0cKBx2bW)
 
 Der Quellcode zu den einzelnen Kapiteln kann mithilfe der Tags abgerufen werden.
 - [Kapitel 3](https://github.com/jonathanbss/ToDoApp/releases/tag/Kapitel_3)
